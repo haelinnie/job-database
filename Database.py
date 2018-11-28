@@ -1,6 +1,6 @@
 import sqlite3
-import internsupplyScraper
-import kdnuggetsScraper
+
+from airtable import Airtable
 
 # db = sqlite3.connect('./database.sqlite')
 # cursor = db.cursor()
@@ -15,12 +15,14 @@ import kdnuggetsScraper
 # result = internsupplyScraper.run()
 # jobs = result[0]
 # links = result[1]
- 
+
 # kdnuggets = kdnuggetsScraper.run()
 # jobs = kdnuggets[0]
 # links = kdnuggets[1]
-
-
+#
+# result = webscraperHw2.jobsSearch()
+# jobs = result[0]
+# links = result[1]
 # Have jobs/links/locations/jobTypes be of the same length and correspond essentially
 # To one row of the database (for each i)
 def insertInformation(jobs, links, locations, jobTypes):
@@ -40,4 +42,26 @@ def insertInformation(jobs, links, locations, jobTypes):
     db.commit()
     db.close()
 
-#insertInformation(jobs, links, [], [])
+airtable = Airtable('appnr1wKI79xFb1zt', 'Table 1', api_key = 'keyP3vnNHkpql58kI')
+# insertInformation(jobs, links, [], [])
+
+db = sqlite3.connect('./database.sqlite')
+cursor = db.cursor()
+
+name = cursor.execute('''SELECT name FROM jobs''')
+jobType = cursor.execute('''SELECT jobType FROM jobs''')
+link = cursor.execute('''SELECT link FROM jobs''')
+location = cursor.execute('''SELECT jobType FROM jobs''')
+
+names = list(name.fetchall())
+jobTypes = list(jobType.fetchall())
+links = list(link.fetchall())
+locations = list(location.fetchall())
+
+
+db.commit()
+db.close()
+
+print(len(names), len(jobTypes), len(links), len(locations))
+for i in range(len(names)):
+    airtable.insert({"Jobs": names[i], "Links": links[i], "Job Type": jobTypes[i], "Location": locations[i]})
