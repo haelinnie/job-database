@@ -1,5 +1,6 @@
 import sqlite3
 import internsupplyScraper
+import kdnuggetsScraper
 
 # db = sqlite3.connect('./database.sqlite')
 # cursor = db.cursor()
@@ -11,9 +12,14 @@ import internsupplyScraper
 # db.commit()
 # db.close()
 
-result = internsupplyScraper.run()
-jobs = result[0]
-links = result[1]
+# result = internsupplyScraper.run()
+# jobs = result[0]
+# links = result[1]
+ 
+# kdnuggets = kdnuggetsScraper.run()
+# jobs = kdnuggets[0]
+# links = kdnuggets[1]
+
 
 # Have jobs/links/locations/jobTypes be of the same length and correspond essentially
 # To one row of the database (for each i)
