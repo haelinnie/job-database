@@ -48,20 +48,15 @@ airtable = Airtable('appnr1wKI79xFb1zt', 'Table 1', api_key = 'keyP3vnNHkpql58kI
 db = sqlite3.connect('./database.sqlite')
 cursor = db.cursor()
 
-name = cursor.execute('''SELECT name FROM jobs''')
-jobType = cursor.execute('''SELECT jobType FROM jobs''')
-link = cursor.execute('''SELECT link FROM jobs''')
-location = cursor.execute('''SELECT jobType FROM jobs''')
-
-names = list(name.fetchall())
-jobTypes = list(jobType.fetchall())
-links = list(link.fetchall())
-locations = list(location.fetchall())
+for row in cursor.execute('SELECT * FROM jobs'):
+        print(row)
+        print(row[0])
+        airtable.insert({"Jobs": row[0], "Links": row[1], "Job Type": row[2], "Location": row[3]})
 
 
 db.commit()
 db.close()
 
-print(len(names), len(jobTypes), len(links), len(locations))
-for i in range(len(names)):
-    airtable.insert({"Jobs": names[i], "Links": links[i], "Job Type": jobTypes[i], "Location": locations[i]})
+# print(len(names), len(jobTypes), len(links), len(locations))
+# for i in range(len(names)):
+#     airtable.insert({"Jobs": names[i], "Links": links[i], "Job Type": jobTypes[i], "Location": locations[i]})
